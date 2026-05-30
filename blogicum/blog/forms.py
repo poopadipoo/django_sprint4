@@ -1,23 +1,19 @@
 from django import forms
-from .models import Post, Comment
+
+from .models import Comment, Post
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'text', 'pub_date', 'location', 'category', 'image','is_published']
+        fields = [
+            'title', 'text', 'pub_date', 'location', 'category',
+            'image', 'is_published',
+        ]
         widgets = {
-            'pub_date': forms.DateInput(attrs={'type': 'date', 'rows': 3, 
-                                               'cols': 22}),
+            'pub_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
-    def clean_first_name(self):
-        # Получаем значение имени из словаря очищенных данных.
-        first_name = self.cleaned_data['first_name']
-        # Разбиваем полученную строку по пробелам 
-        # и возвращаем только первое имя.
-        return first_name.split()[0]
-    
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -34,6 +30,3 @@ class CommentForm(forms.ModelForm):
         labels = {
             'text': 'Комментарий',
         }
-
-
-
